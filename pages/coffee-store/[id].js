@@ -61,10 +61,9 @@ export default function CoffeeStore() {
 						<Image src={"/static/icons/map-2.svg"} width={30} height={30} />
 					</div>
 					<p className={styles.address}>{location?.address}</p>
-
-					{location.neighborhood ? (
+					{location.neighborhood.length > 0 && (
 						<p className={styles.neighborhood}>{location.neighborhood}</p>
-					):null}
+					)}
 					<div className={styles.starImgWrapper}>
 						<Image src={"/static/icons/star.svg"} width={30} height={30} />
 					</div>
