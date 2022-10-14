@@ -1,0 +1,131 @@
+/** By default, this is a mobile breakpoint **/
+.container {
+	margin-bottom: 1rem;
+	z-index: 2;
+	text-align: center;
+}
+
+.title {
+	letter-spacing: -0.025em;
+	font-weight: 800;
+	font-size: 3rem /* 48px */;
+	line-height: 1;
+}
+
+.astralText {
+	color: var(--color-secondary);
+}
+
+.cafeText {
+	color: var(--color-primary);
+	display: inline;
+	filter: brightness(1.1);
+}
+
+.subTitle {
+	margin: 0.75rem 0;
+	font-size: 1.5rem /* 24px */;
+	line-height: 2rem /* 32px */;
+	color: var(--text-color-secondary);
+}
+
+.buttonWrapper {
+	margin-top: 1.25rem;
+}
+
+.button {
+	background-color: var(--color-secondary);
+	cursor: pointer;
+	color: var(--text-color-primary);
+	outline: 0;
+	border: 0px;
+
+	padding: 1rem 2.5rem;
+	font-size: 1.125rem /* 18px */;
+	line-height: 1.75rem /* 28px */;
+	transition: transform 0.2s ease-in-out;
+	border-radius: 0.625rem;
+}
+
+.button:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-elevation-low);
+}
+
+.button:active {
+	transform: translateY(0);
+}
+
+/**
+    Breakpoints:
+    ------------
+    sm: min-width: 640px; //small device
+    md: min-width: 768px; // medium device
+    lg: min-width: 1024px; // large device
+    xl: min-width: 1280px; // extra large device
+    2xl: min-width: 1536px; // 2 x extra large device
+  **/
+
+/** sm breakpoint **/
+@media (min-width: 640px) {
+	.title {
+		font-size: 3rem /* 48px */;
+		line-height: 1;
+	}
+
+	.subTitle {
+		margin: 1.25rem 0;
+		max-width: 36rem;
+	}
+
+	.buttonWrapper {
+		display: flex;
+		margin-top: 2rem;
+	}
+}
+
+/** md breakpoint **/
+@media (min-width: 768px) {
+	.title {
+		font-size: 3.75rem /* 60px */;
+		line-height: 1;
+	}
+
+	.subTitle {
+		margin: 1.25rem 0;
+	}
+
+	.button {
+		padding-top: 1rem /* 16px */;
+		padding-bottom: 1rem /* 16px */;
+		font-size: 1.125rem /* 18px */;
+		line-height: 1.75rem /* 28px */;
+		padding-left: 2.5rem /* 40px */;
+		padding-right: 2.5rem /* 40px */;
+	}
+}
+
+/** lg breakpoint **/
+@media (min-width: 1024px) {
+	.container {
+		text-align: center;
+	}
+
+	.title {
+		font-size: 4.5rem /* 72px */;
+		line-height: 1;
+	}
+
+	.subTitle {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.buttonWrapper {
+		justify-content: flex-start;
+	}
+}
+
+/** xl breakpoint **/
+@media (min-width: 1280px) {
+}

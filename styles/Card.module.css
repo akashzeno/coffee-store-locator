@@ -1,0 +1,16 @@
+.container {
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+}
+
+.cardHeader {
+	margin-bottom: 15px;
+}
+
+.cardImage {
+	border-radius: 10px;
+}
