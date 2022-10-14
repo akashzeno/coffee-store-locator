@@ -24,7 +24,8 @@ export default function CoffeeStore() {
 
 	const { location, name, imgUrl } =
 		findCoffeeStoreById(demoCoffeeStores, id) ||
-		findCoffeeStoreById(coffeeStores, id);
+		findCoffeeStoreById(coffeeStores, id) ||
+		{};
 
 	const upVote = () => {
 		console.log("Up Vote Done");
