@@ -62,10 +62,7 @@ export default function CoffeeStore() {
 					id,
 				}),
 			});
-			const dbCoffeeStore = response.json();
-			if (dbCoffeeStore && dbCoffeeStore.length > 0) {
-				setRating(rating + 1);
-			}
+			setRating(rating + 1);
 		} catch (error) {
 			console.error("Error upvoting coffee store", error);
 		}
