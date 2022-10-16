@@ -3,9 +3,10 @@ import Link from "next/link";
 import Head from "next/head";
 import styles from "../../styles/CoffeeStore.module.css";
 import Image from "next/image";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/storeContext.js";
-
+import useSWR from "swr";
+import { fetcher } from "../../utils/fetcher.js";
 export default function CoffeeStore() {
 	const findCoffeeStoreById = (coffeeStores, id) =>
 		coffeeStores.find((coffeeStore) => coffeeStore.fsq_id === id);
@@ -17,6 +18,15 @@ export default function CoffeeStore() {
 	} = useContext(StoreContext);
 
 	const id = router.query.id;
+
+	const [rating, setRating] = useState(0);
+
+	const [coffeeStore, setCoffeeStore] = useState(
+		findCoffeeStoreById(demoCoffeeStores, id) ||
+			findCoffeeStoreById(coffeeStores, id)
+	);
+
+	const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
 
 	const handleCreateCoffeeStore = async (coffeeStore) => {
 		try {
@@ -35,30 +45,57 @@ export default function CoffeeStore() {
 					img_url: imgUrl,
 				}),
 			});
-			const dbCoffeeStore = response.json();
-			console.log({ dbCoffeeStore });
+			// const dbCoffeeStore = response.json();
 		} catch (error) {
 			console.error("Error creating coffee store", error);
 		}
 	};
 
-	const { location, name, imgUrl } =
-		findCoffeeStoreById(demoCoffeeStores, id) ||
-		findCoffeeStoreById(coffeeStores, id) ||
-		{};
-
-	const upVote = () => {
-		console.log("Up Vote Done");
+	const upVote = async () => {
+		try {
+			const response = await fetch("/api/upvoteCoffeeStoreById", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id,
+				}),
+			});
+			const dbCoffeeStore = response.json();
+			if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+				setRating(rating + 1);
+			}
+		} catch (error) {
+			console.error("Error upvoting coffee store", error);
+		}
 	};
 
 	useEffect(() => {
-		if (findCoffeeStoreById) {
-			handleCreateCoffeeStore(
-				findCoffeeStoreById(demoCoffeeStores, id) ||
-					findCoffeeStoreById(coffeeStores, id)
-			);
+		if (coffeeStore) {
+			handleCreateCoffeeStore(coffeeStore);
 		}
 	}, [id]);
+
+	useEffect(() => {
+		if (data && data.length > 0) {
+			const { name, address, neighborhood, rating, img_url } = data[0];
+
+			setCoffeeStore({
+				id,
+				name,
+				location: { address, neighborhood },
+				imgUrl: img_url,
+			});
+			setRating(rating);
+		}
+	}, [data]);
+
+	const { name, imgUrl, location } = coffeeStore || {};
+
+	if (error) {
+		return <div>Something went wrong retrieving coffee store page</div>;
+	}
 
 	if (router.isFallback) {
 		return <div>Loading...</div>;
@@ -100,7 +137,7 @@ export default function CoffeeStore() {
 					<div className={styles.starImgWrapper}>
 						<Image src={"/static/icons/star.svg"} width={30} height={30} />
 					</div>
-					<p className={styles.votes}>1</p>
+					<p className={styles.votes}>{rating}</p>
 					<button className={styles.upVoteBtn} onClick={upVote}>
 						Up Vote!
 					</button>
