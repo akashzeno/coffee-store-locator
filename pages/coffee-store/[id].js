@@ -3,7 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 import styles from "../../styles/CoffeeStore.module.css";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StoreContext } from "../../context/storeContext.js";
 
 export default function CoffeeStore() {
@@ -18,9 +18,29 @@ export default function CoffeeStore() {
 
 	const id = router.query.id;
 
-	if (router.isFallback) {
-		return <div>Loading...</div>;
-	}
+	const handleCreateCoffeeStore = async (coffeeStore) => {
+		try {
+			const { name, location, imgUrl } = coffeeStore;
+			const response = await fetch("/api/createCoffeeStore", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					id,
+					name,
+					address: location.address || "",
+					neighborhood: location.neighborhood || "",
+					rating: 0,
+					img_url: imgUrl,
+				}),
+			});
+			const dbCoffeeStore = response.json();
+			console.log({ dbCoffeeStore });
+		} catch (error) {
+			console.error("Error creating coffee store", error);
+		}
+	};
 
 	const { location, name, imgUrl } =
 		findCoffeeStoreById(demoCoffeeStores, id) ||
@@ -30,6 +50,19 @@ export default function CoffeeStore() {
 	const upVote = () => {
 		console.log("Up Vote Done");
 	};
+
+	useEffect(() => {
+		if (findCoffeeStoreById) {
+			handleCreateCoffeeStore(
+				findCoffeeStoreById(demoCoffeeStores, id) ||
+					findCoffeeStoreById(coffeeStores, id)
+			);
+		}
+	}, [id]);
+
+	if (router.isFallback) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<div className={styles.layout}>
