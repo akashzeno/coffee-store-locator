@@ -11,6 +11,7 @@ export default function Card(props) {
 					<Image
 						className={styles.cardImage}
 						src={props.imgUrl}
+						alt={props.name}
 						width={260}
 						height={260}
 					/>

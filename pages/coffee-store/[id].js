@@ -102,6 +102,8 @@ export default function CoffeeStore() {
 		<div className={styles.layout}>
 			<Head>
 				<title>{name}</title>
+				<meta name="description" content={`${name} coffee store`} />
+				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<div className={styles.container}>
 				<div className={styles.col1}>
