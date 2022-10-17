@@ -76,7 +76,6 @@ export default function Home({ demoCoffeeStores }) {
 			</main>
 			{isEmpty(coffeeStores) ? (
 				<>
-					<h2 className={styles.heading2}>Stores Near Me</h2>
 					<div className={styles.cardLayout}>
 						{demoCoffeeStores.map((coffeeStore) => {
 							return (
