@@ -107,34 +107,42 @@ export default function CoffeeStore() {
 			</Head>
 			<div className={styles.container}>
 				<div className={styles.col1}>
-					<Link href="/">
-						<a className={styles.backToHomeLink}>
-							<span className={styles.backToHomeLinkIcon}>➜</span> Back To Home
-						</a>
+					<Link href="/" className={styles.backToHomeLink}>
+						<span className={styles.backToHomeLinkIcon}>➜</span> Back To Home
 					</Link>
 					<h1 className={styles.name}>{name}</h1>
 					<Image
+						className={styles.storeImg}
 						src={
 							imgUrl ||
 							"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
 						}
-						alt={name}
-						width={600}
-						height={360}
-						className={styles.storeImg}
+						alt={`${name}`}
+						width={600 * 1.6}
+						height={360 * 1.6}
 						layout="responsive"
 					/>
 				</div>
 				<div className={`glass ${styles.col2}`}>
 					<div className={styles.addressImgWrapper}>
-						<Image src={"/static/icons/map-2.svg"} width={30} height={30} />
+						<Image
+							src={"/static/icons/map-2.svg"}
+							width={30}
+							height={30}
+							alt="map icon"
+						/>
 					</div>
 					<p className={styles.address}>{location?.address}</p>
 					{location?.neighborhood && (
 						<p className={styles.neighborhood}>{location.neighborhood}</p>
 					)}
 					<div className={styles.starImgWrapper}>
-						<Image src={"/static/icons/star.svg"} width={30} height={30} />
+						<Image
+							src={"/static/icons/star.svg"}
+							width={30}
+							height={30}
+							alt="star icon"
+						/>
 					</div>
 					<p className={styles.votes}>{rating}</p>
 					<button className={styles.upVoteBtn} onClick={upVote}>
